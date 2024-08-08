@@ -1,14 +1,21 @@
 # Laboratory work on ML and DS
 (As part of the additional courses at RTU MIREA)
 ___
+## List of topics: 
+1. Logistic regression
+2. Clustering
+3. Radial basis network and auto-differentiation
+4. Vector representations of images
+5. Vector representations of words
+
+___
 ## Description of the works: 
 Tasks one through three are devoted to basic machine learning and data processing algorithms.
 
-toDo: Insert important blocks of code for each task
 ### 1.Logistic regression
 ![task](pictures/task1.jpg)
 
-Important steps:
+Important stages:
 1. Data separation, model creation and training
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
@@ -40,7 +47,7 @@ for n_components in n_components_list:
 ### 2.Clustering
 ![task1](pictures/task2.jpg)
 
-Important steps:
+Important stages:
 1. Clustering of data sets by 3 methods
 ```python
 # Генерация тестовых данных
@@ -73,7 +80,7 @@ print(f"Rand Index для Gaussian Mixtures: {rand_index_gmm}")
 ### 3.Radial basis network and auto-differentiation
 ![task1](pictures/task3.jpg)
 
-Important steps:
+Important stages:
 1. Initializing the main class
 ```python
 class RBF(nn.Module):
@@ -140,6 +147,7 @@ Tasks 4 and 5 are devoted to neural network data analysis.
 ![task1](pictures/task4.1.jpg)
 ![task1](pictures/task4.2.jpg)
 
+Important stages:
 1. Converting an image to a vector
 ```python
 def image_to_vector(image_path, model_name="VGG16", target_size=(64, 64)):
@@ -187,6 +195,38 @@ def cosine_similarity(vector1, vector2):
 ![task1](pictures/task5.2.jpg)
 ![task1](pictures/task5.3.jpg)
 
-This task is still under development, but it will be completed in the next couple of days
+Important stages:
+1. Tokenize:
+```python
+def tokenize(text):
+    return re.findall(r'\w+|[^\w\s]', text, re.UNICODE)
+```
 
-[Decision](https://colab.research.google.com/drive/1-54ZxQtWfKXoHxgBbH9mhe0zR_0dtFvi?usp=sharing)
+2. Model Training
+```python
+sentences_tokenized = [tokenize(sentence) for sentence in sentences]
+start_time = time.time()
+model = Word2Vec(sentences=sentences_tokenized, vector_size=300, window=5, min_count=5, workers=4)
+training_time = time.time() - start_time
+print(f'Время обучения: {training_time:.2f} (сек)')
+```
+
+3. Data visualization: 
+```python
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.scatter(pca_result[:, 0], pca_result[:, 1])
+for i, txt in enumerate(emoji_list):
+    plt.annotate(txt, (pca_result[i, 0], pca_result[i, 1]), fontsize=8)
+plt.title('PCA')
+
+plt.subplot(1, 2, 2)
+plt.scatter(tsne_result[:, 0], tsne_result[:, 1])
+for i, txt in enumerate(emoji_list):
+    plt.annotate(txt, (tsne_result[i, 0], tsne_result[i, 1]), fontsize=8)
+plt.title('TSNE')
+
+plt.show()
+```
+
+[Decision](https://colab.research.google.com/drive/1prmPuVWd4DqnOu23IIQmkigg6JUuqiRs?usp=sharing)
